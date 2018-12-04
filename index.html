@@ -1,0 +1,24 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>webDictonary</title>
+</head>
+<body>
+    <div class="w3-container">
+        <form class="w3-form-horizontal" method="post" action="/">
+            <div class="w3-form-group">
+                <label>Enter URL</label>
+                <input type="url" class="form-control" name="get_url" placeholder="Enter URL">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </form>
+    </div>
+
+    {% if wordcloud %}
+    <div class="w3-container">{{ wordcloud.show() }}</div>
+    {% end %}
+
+</body>
+</html>
