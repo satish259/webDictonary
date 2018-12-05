@@ -2,7 +2,10 @@ import os.path
 import tornado.httpserver
 import tornado.ioloop
 import tornado.web
+import dbHandler
 from webDictonary import parseURLtoText, countWords, topWords
+
+db=dbHandler.fetchDB()
 
 def generateWordCloud(words):
     '''
@@ -19,8 +22,10 @@ class MainHandler(tornado.web.RequestHandler):
     def post(self):
         url = self.get_argument('get_url', None)
         topCommonWords = topWords(countWords(parseURLtoText(url)),100)
+        allData=dbHandler.updateWords(db,topCommonWords)
         wordcloud = generateWordCloud(topCommonWords)
         self.render("index.html", wordcloud=wordcloud)
+        self.render("admin.html")
 
 class Application(tornado.web.Application):
     def __init__(self):
@@ -37,3 +42,5 @@ if __name__ == "__main__":
     http_server = tornado.httpserver.HTTPServer(Application())
     http_server.listen(8888)
 tornado.ioloop.IOLoop.instance().start()
+
+
